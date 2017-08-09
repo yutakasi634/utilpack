@@ -34,6 +34,19 @@ int main()
     for(auto elem : test_matrix)
 	cout << elem << " ";
     cout << endl;
+
+    cout << "fill with rowculum num" << endl;
+    for(size_t i = 0; i < culum_Num; ++i){
+	for(size_t j = 0; j < row_Num; ++j)
+	    test_matrix.at(i,j) = i * 10 + j;
+    }
+
+    cout << "test rowbegin() and rowend()." << endl;
+    for(array_matrix<int, row_Num, culum_Num>::iterator itr =
+	    test_matrix.rowbegin(row_Num / 2);
+	itr != (test_matrix.rowend(row_Num / 2)); ++itr)
+	cout << *itr << " ";
+    cout << endl;
     return 0;
 }
 

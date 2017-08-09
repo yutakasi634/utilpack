@@ -10,8 +10,8 @@ namespace Utilpack
 template<typename value_T, std::size_t row_Num, std::size_t culum_Num>
 class array_matrix
 {
+  public:
     using array_type			= std::array<value_T, row_Num * culum_Num>;
-
     using value_type			= value_T;
     using reference			= value_type&;
     using const_reference		= const value_type&;
@@ -46,8 +46,8 @@ class array_matrix
     { return content.end(); }
 
     const_iterator end() const noexcept
-    { return content.begin(); }
-
+    { return content.end(); }
+    
     reverse_iterator rbegin() noexcept
     { return reverse_iterator(end()); }
 
@@ -72,7 +72,26 @@ class array_matrix
     const_reverse_iterator crend() const noexcept
     { return content.cbegin(); }
 
-    // Capacity
+//for 2-D iterator
+    iterator rowbegin(size_type row) noexcept
+    { return content.begin() + row * culum_Num; }
+    
+    const_iterator rowbegin(size_type row) const noexcept
+    { return content.begin() + row * culum_Num; }
+
+    iterator rowend(size_type row) noexcept
+    { return rowbegin(row) + culum_Num; }
+
+    const_iterator rowend(size_type row) const noexcept
+    { return rowbegin(row) + culum_Num; }
+
+    const_iterator crowbegin(size_type row) const noexcept
+    { return content.cbegin() + row * culum_Num; }
+    
+    const_iterator crowend(size_type row) const noexcept
+    { return crowend(row) + culum_Num; }
+    
+// Capacity
     constexpr size_type size() const noexcept
     { return elem_Num; }
 
