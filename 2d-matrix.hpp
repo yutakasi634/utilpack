@@ -1,3 +1,6 @@
+// This program is made in expectation of C ++ 14.
+// When running on C ++ 11, you will get a warning about the constexpr function.
+
 #ifndef UTIL_TOW_DIMENSION_MATRIX
 #define UTIL_TOW_DIMENSION_MATRIX
 
@@ -7,11 +10,11 @@
 namespace Utilpack
 {
 
-template<typename value_T, std::size_t row_Num, std::size_t culum_Num>
+template<typename value_T, std::size_t row_Num, std::size_t column_Num>
 class array_matrix
 {
   public:
-    using array_type			= std::array<value_T, row_Num * culum_Num>;
+    using array_type			= std::array<value_T, row_Num * column_Num>;
     using value_type			= value_T;
     using reference			= value_type&;
     using const_reference		= const value_type&;
@@ -20,14 +23,16 @@ class array_matrix
     using size_type			= std::size_t;
     using reverse_iterator		= typename array_type::reverse_iterator;
     using const_reverse_iterator	= typename array_type::const_reverse_iterator;
-
-  private:
-    const size_type elem_Num;
-    array_type content;    
-
-  public:
-    array_matrix():elem_Num(row_Num * culum_Num){};
-    array_matrix(value_T value):elem_Num(row_Num * culum_Num)
+    using row_iterator			= iterator;
+    using const_row_iterator		= const_iterator;
+    using stride_iterator		= typename stride_iterator<value_type, row_Num>;
+    using column_iterator		= stride_iterator;
+    using const_column_iterator		= const stride_iterator;
+    
+    constexpr static size_type elem_Num = row_Num * column_Num;
+    
+    array_matrix() {};
+    array_matrix(value_T value)
     {
 	fill_n(value);
     };
@@ -74,22 +79,24 @@ class array_matrix
 
 //for 2-D iterator
     iterator rowbegin(size_type row) noexcept
-    { return content.begin() + row * culum_Num; }
+    { return content.begin() + row * column_Num; }
     
     const_iterator rowbegin(size_type row) const noexcept
-    { return content.begin() + row * culum_Num; }
+    { return content.begin() + row * column_Num; }
 
     iterator rowend(size_type row) noexcept
-    { return rowbegin(row) + culum_Num; }
+    { return rowbegin(row) + column_Num; }
 
     const_iterator rowend(size_type row) const noexcept
-    { return rowbegin(row) + culum_Num; }
+    { return rowbegin(row) + column_Num; }
 
     const_iterator crowbegin(size_type row) const noexcept
-    { return content.cbegin() + row * culum_Num; }
+    { return content.cbegin() + row * column_Num; }
     
     const_iterator crowend(size_type row) const noexcept
-    { return crowend(row) + culum_Num; }
+    { return crowend(row) + column_Num; }
+
+    stride_iterator
     
 // Capacity
     constexpr size_type size() const noexcept
@@ -102,7 +109,7 @@ class array_matrix
     { return row_Num; }
 
     constexpr size_type ysize() const noexcept
-    { return culum_Num; }
+    { return column_Num; }
     
     constexpr bool empty() const noexcept
     { return content.empty(); }
@@ -112,31 +119,34 @@ class array_matrix
     {
 	if (n >= row_Num)
 	    std::out_of_range("array_matrix row index is bigger than row size.");
-	else if (m >= culum_Num)
-	    std::out_of_range("array_matrix culum index is bigger than culum size.");
-	return content.at(n * culum_Num + m);
+	else if (m >= column_Num)
+	    std::out_of_range("array_matrix column index is bigger than column size.");
+	return content.at(n * column_Num + m);
     }
 
     constexpr const_reference at(size_type n, size_type m) const noexcept
     {
 	if (n >= row_Num)
 	    std::out_of_range("array_matrix row index is bigger than row size.");
-	else if (m >= culum_Num)
-	    std::out_of_range("array_matrix culum index is bigger than culum size.");
-	return content.at(n * culum_Num + m);
+	else if (m >= column_Num)
+	    std::out_of_range("array_matrix column index is bigger than column size.");
+	return content.at(n * column_Num + m);
     }
+    
+  private:
+    array_type content;
     
 };
 
 //Array_matrix comparisons.
-template<typename value_T, std::size_t culum_Num, std::size_t row_Num>
-inline bool operator==(const array_matrix<value_T, culum_Num, row_Num>& one,
-		       const array_matrix<value_T, culum_Num, row_Num>& two)
+template<typename value_T, std::size_t column_Num, std::size_t row_Num>
+inline bool operator==(const array_matrix<value_T, column_Num, row_Num>& one,
+		       const array_matrix<value_T, column_Num, row_Num>& two)
 { return std::equal(one.begin(), one.end(), two.begin()); }
 
-template<typename value_T, std::size_t culum_Num, std::size_t row_Num>
-inline bool operator!=(const array_matrix<value_T, culum_Num, row_Num>& one,
-		       const array_matrix<value_T, culum_Num, row_Num>& two)
+template<typename value_T, std::size_t column_Num, std::size_t row_Num>
+inline bool operator!=(const array_matrix<value_T, column_Num, row_Num>& one,
+		       const array_matrix<value_T, column_Num, row_Num>& two)
 { return !(one == two); }
 
 } /* Utilpack */
