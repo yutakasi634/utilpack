@@ -3,8 +3,63 @@
 
 #include <iterator>
 
+ // TODO check stride length equals to one of divisor of container size
+ // when construct.
+
 namespace Utilpack
 {
+//for template friend member operator
+template<typename value_T, std::size_t stride, typename container_T>
+class stride_iterator;
+
+template<typename value_T, std::size_t stride, typename container_T>
+bool operator==(const stride_iterator<value_T, stride, container_T>&,
+		const stride_iterator<value_T, stride, container_T>&);
+
+template<typename value_T, std::size_t stride, typename container_T>
+bool operator!=(const stride_iterator<value_T, stride, container_T>&,
+		const stride_iterator<value_T, stride, container_T>&);
+
+template<typename value_T, std::size_t stride, typename container_T>
+bool operator<(const stride_iterator<value_T, stride, container_T>&,
+		const stride_iterator<value_T, stride, container_T>&);
+
+template<typename value_T, std::size_t stride, typename container_T>
+bool operator>(const stride_iterator<value_T, stride, container_T>&,
+		const stride_iterator<value_T, stride, container_T>&);
+
+template<typename value_T, std::size_t stride, typename container_T>
+bool operator<=(const stride_iterator<value_T, stride, container_T>&,
+		const stride_iterator<value_T, stride, container_T>&);
+
+template<typename value_T, std::size_t stride, typename container_T>
+bool operator>=(const stride_iterator<value_T, stride, container_T>&,
+		const stride_iterator<value_T, stride, container_T>&);
+
+template<typename value_T, std::size_t stride, typename container_T>
+stride_iterator<value_T, stride, container_T>
+operator+(const typename
+	  stride_iterator<value_T, stride, container_T>::difference_type,
+	  const stride_iterator<value_T, stride, container_T>&);
+
+template<typename value_T, std::size_t stride, typename container_T>
+stride_iterator<value_T, stride, container_T>
+operator+(const stride_iterator<value_T, stride, container_T>&,
+	  const typename
+	  stride_iterator<value_T, stride, container_T>::difference_type);
+
+template<typename value_T, std::size_t stride, typename container_T>
+stride_iterator<value_T, stride, container_T>
+operator-(const stride_iterator<value_T, stride, container_T>&,
+	  const typename
+	  stride_iterator<value_T, stride, container_T>::difference_type);
+
+template<typename value_T, std::size_t stride, typename container_T>
+typename stride_iterator<value_T, stride, container_T>::difference_type
+operator-(const stride_iterator<value_T, stride, container_T>&,
+	  const stride_iterator<value_T, stride, container_T>&);
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 template<typename value_T, std::size_t stride, typename container_T>
 class stride_iterator
@@ -35,9 +90,11 @@ class stride_iterator
 	return elem_p;
     }
     
+    
     stride_iterator& operator++()
     {
-	return elem_p += stride;
+	elem_p += stride;
+	return *this;
     }
     
     stride_iterator operator++(int)
@@ -50,7 +107,8 @@ class stride_iterator
     //for bidirectional iterator
     stride_iterator& operator--()
     {
-	return elem_p -= stride;
+	elem_p -= stride;
+	return *this;
     }
     stride_iterator operator--(int)
     {
@@ -74,17 +132,17 @@ class stride_iterator
 	return elem_p -= stride * arg;
     }
     
-    friend bool operator==(const self_type&, const self_type&);
-    friend bool operator!=(const self_type&, const self_type&);
-    friend bool operator<(const self_type&, const self_type&);
-    friend bool operator>(const self_type&, const self_type&);
-    friend bool operator<=(const self_type&, const self_type&);
-    friend bool operator>=(const self_type&, const self_type&);
+    friend bool operator== <>(const self_type&, const self_type&);
+    friend bool operator!= <>(const self_type&, const self_type&);
+    friend bool operator< <>(const self_type&, const self_type&);
+    friend bool operator> <>(const self_type&, const self_type&);
+    friend bool operator<= <>(const self_type&, const self_type&);
+    friend bool operator>= <>(const self_type&, const self_type&);
     
-    friend stride_iterator operator+(const difference_type, const self_type&);
-    friend stride_iterator operator+(const self_type&, const difference_type);
-    friend stride_iterator operator-(const self_type&, const difference_type);
-    friend difference_type operator-(const self_type&, const self_type&);
+    friend stride_iterator operator+ <>(const difference_type, const self_type&);
+    friend stride_iterator operator+ <>(const self_type&, const difference_type);
+    friend stride_iterator operator- <>(const self_type&, const difference_type);
+    friend difference_type operator- <>(const self_type&, const self_type&);
     
   private:
     pointer elem_p;
@@ -100,8 +158,8 @@ class stride_iterator
 //friend operator for stride_iterator
 
 template<typename value_T, std::size_t stride, typename container_T>
-    bool operator==(const stride_iterator<value_T, stride, container_T>& one,
-		    const stride_iterator<value_T, stride, container_T>& two)
+bool operator==(const stride_iterator<value_T, stride, container_T>& one,
+		const stride_iterator<value_T, stride, container_T>& two)
 {
     return one.elem_p == two.elem_p;
 }
@@ -155,9 +213,9 @@ stride_iterator<value_T, stride, container_T> operator+(
     const stride_iterator<value_T, stride, container_T>& arg_itr,
     const typename
     stride_iterator<value_T, stride, container_T>::difference_type p_diff)
-    {
-	return p_diff + arg_itr;
-    }
+{
+    return p_diff + arg_itr;
+}
 
 template<typename value_T, std::size_t stride, typename container_T>
 stride_iterator<value_T, stride, container_T> operator-(
