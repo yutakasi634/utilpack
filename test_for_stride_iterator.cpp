@@ -9,19 +9,32 @@ template<size_t size>
 class test_array
 {
   public:
-    int inter_array[size];
-
     test_array()
     {
 	for(size_t i = 0; i < size; ++i)
-	    inter_array[i] = i;
+	    inter_array.at(i) = i;
     }
 
-    int* begin() const
-    { return *inter_array;}
+    stride_iterator<int, 2, test_array<size> > s2_begin()
+    { return stride_iterator<int, 2, test_array<size> >(inter_array.begin());}
 
-    int* end() const
-    { return begin() + size;}
+    stride_iterator<int, 2, test_array<size> > s2_end()
+    { return inter_array.end();}
+
+    stride_iterator<int, 3, test_array<size> > s3_begin()
+    { return stride_iterator<int, 3, test_array<size> >(inter_array.begin());}
+
+    stride_iterator<int, 3, test_array<size> > s3_end()
+    { return inter_array.end();}
+
+    stride_iterator<int, 7, test_array<size> > s7_begin()
+    { return stride_iterator<int, 7, test_array<size> >(inter_array.begin());}
+
+    stride_iterator<int, 7, test_array<size> > s7_end()
+    { return inter_array.end();}
+    
+  private:
+    array<int, size> inter_array;
 };
 
 
@@ -29,8 +42,20 @@ int main(){
     constexpr size_t ar_size(28);
     test_array<ar_size> tes_ar;
     cout << "test for stride_iterator<int, 2, test_array<ar_size> >." << endl;
-    for(stride_iterator<int, 2, test_array<ar_size> > itr(tes_ar.begin());
-	itr != stride_iterator<int, 2, test_array<ar_size> > itr(tes_ar.end()); ++itr)
+    for(stride_iterator<int, 2, test_array<ar_size> > itr = tes_ar.s2_begin();
+	itr != tes_ar.s2_end(); ++itr)
+	cout << *itr << " ";
+    cout << endl;
+
+    cout << "test for stride_iterator<int, 7, test_array<ar_size> >." << endl;
+    for(stride_iterator<int, 7, test_array<ar_size> > itr = tes_ar.s7_begin();
+	itr != tes_ar.s7_end(); ++itr)
+	cout << *itr << " ";
+    cout << endl;
+
+    cout << "test for stride_iterator<int, 3, test_array<ar_size> >." << endl;
+    for(stride_iterator<int, 3, test_array<ar_size> > itr = tes_ar.s3_begin();
+	itr != tes_ar.s3_end(); ++itr)
 	cout << *itr << " ";
     cout << endl;
 	
