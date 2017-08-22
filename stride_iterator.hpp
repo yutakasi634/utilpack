@@ -120,16 +120,18 @@ class stride_iterator
     //for random access iterator
     reference operator[](difference_type arg) const
     {
-	return elem_p + (arg * stride);
+	return *(elem_p + (arg * stride));
     }
     
     stride_iterator& operator+=(const difference_type arg)
     {
-	return elem_p += stride * arg;
+	elem_p += stride * arg;
+	return *this;
     }
     stride_iterator& operator-=(const difference_type arg)
     {
-	return elem_p -= stride * arg;
+	elem_p -= stride * arg;
+	return *this;
     }
     
     friend bool operator== <>(const self_type&, const self_type&);
