@@ -6,6 +6,7 @@
 
 #include <array>
 #include <stdexcept>
+#include "stride_iterator.hpp"
 
 namespace Utilpack
 {
@@ -18,14 +19,14 @@ class array_matrix
     using value_type			= value_T;
     using reference			= value_type&;
     using const_reference		= const value_type&;
+    using size_type			= std::size_t;
+    using stride_iterator		= stride_iterator<value_type, column_Num, array_matrix>;
     using iterator			= typename array_type::iterator;
     using const_iterator		= typename array_type::const_iterator;
-    using size_type			= std::size_t;
     using reverse_iterator		= typename array_type::reverse_iterator;
     using const_reverse_iterator	= typename array_type::const_reverse_iterator;
     using row_iterator			= iterator;
     using const_row_iterator		= const_iterator;
-    using stride_iterator		= typename stride_iterator<value_type, row_Num>;
     using column_iterator		= stride_iterator;
     using const_column_iterator		= const stride_iterator;
     
@@ -78,25 +79,36 @@ class array_matrix
     { return content.cbegin(); }
 
 //for 2-D iterator
-    iterator rowbegin(size_type row) noexcept
-    { return content.begin() + row * column_Num; }
+    row_iterator rowbegin(size_type row) noexcept
+    { return (content.begin() + row * column_Num); }
     
-    const_iterator rowbegin(size_type row) const noexcept
+    const_row_iterator rowbegin(size_type row) const noexcept
     { return content.begin() + row * column_Num; }
 
-    iterator rowend(size_type row) noexcept
+    row_iterator rowend(size_type row) noexcept
     { return rowbegin(row) + column_Num; }
 
-    const_iterator rowend(size_type row) const noexcept
+    const_row_iterator rowend(size_type row) const noexcept
     { return rowbegin(row) + column_Num; }
 
-    const_iterator crowbegin(size_type row) const noexcept
+    const_row_iterator crowbegin(size_type row) const noexcept
     { return content.cbegin() + row * column_Num; }
     
-    const_iterator crowend(size_type row) const noexcept
+    const_row_iterator crowend(size_type row) const noexcept
     { return crowend(row) + column_Num; }
 
-    stride_iterator
+    column_iterator columnbegin(size_type column) noexcept
+    { return column_iterator(content.begin() + column);}
+
+    const_column_iterator columnbegin(size_type column) const noexcept
+    { return column_iterator(content.begin() + column); }
+
+    column_iterator columnend(size_type column) noexcept
+    { return columnbegin(column) += row_Num; }
+
+    const_column_iterator columnend(size_t column) const noexcept
+    { return columnend(column) += row_Num; }
+    
     
 // Capacity
     constexpr size_type size() const noexcept
