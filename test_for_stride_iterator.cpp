@@ -37,7 +37,6 @@ class test_array
     array<int, size> inter_array;
 };
 
-
 int main(){
     constexpr size_t ar_size(28);
     test_array<ar_size> tes_ar;
@@ -52,12 +51,27 @@ int main(){
     	itr < tes_ar.s3_end(); ++itr)
     	cout << *itr << " ";
     cout << endl;
-    
+
+    //for loop based on != is not recomended.
     cout << "test for stride_iterator<int, 7, test_array<ar_size> >." << endl;
     for(stride_iterator<int, 7, test_array<ar_size> > itr = tes_ar.s7_begin();
-	itr < tes_ar.s7_end(); ++itr)
+	itr != tes_ar.s7_end(); ++itr)
 	cout << *itr << " ";
     cout << endl;
-	
+
+    stride_iterator<int, 3, test_array<ar_size> > g_itr = tes_ar.s3_begin();
+    cout << "test for new stride_iterator<int, 3, test_array<ar_size> > operator +=."
+	 << endl << "*(g_itr += 3) is " << *(g_itr += 3) << endl;
+    cout << "test for stride_iterator<int, 3, test_array<ar_size> > operator -=."
+	 << endl << "*(g_itr -= 2) is " << *(g_itr -= 2) << endl;
+    cout << "test for stride_iterator<int, 3, test_array<ar_size> > operator ++(int)."
+	 << endl << "*(g_itr++) is " << *(g_itr++) << endl
+	 << "*g_itr is " << *g_itr << endl;
+    cout << "test for stride_iterator<int, 3, test_array<ar_size> > operator --(int)."
+	 << endl << "*(g_itr--) is " << *(g_itr--) << endl
+	 << "*g_itr is " << *g_itr << endl;
+    cout << "test for stride_iterator<int, 3, test_array<ar_size> > operator -= []."
+	 << endl << "g_itr[2] is " << g_itr[2] << endl;
+    
     return 0;
 }
