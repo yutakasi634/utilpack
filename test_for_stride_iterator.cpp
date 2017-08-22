@@ -43,19 +43,19 @@ int main(){
     test_array<ar_size> tes_ar;
     cout << "test for stride_iterator<int, 2, test_array<ar_size> >." << endl;
     for(stride_iterator<int, 2, test_array<ar_size> > itr = tes_ar.s2_begin();
-	itr != tes_ar.s2_end(); ++itr)
-	cout << *itr << " ";
-    cout << endl;
-
-    cout << "test for stride_iterator<int, 7, test_array<ar_size> >." << endl;
-    for(stride_iterator<int, 7, test_array<ar_size> > itr = tes_ar.s7_begin();
-	itr != tes_ar.s7_end(); ++itr)
+	itr < tes_ar.s2_end(); ++itr)
 	cout << *itr << " ";
     cout << endl;
 
     cout << "test for stride_iterator<int, 3, test_array<ar_size> >." << endl;
     for(stride_iterator<int, 3, test_array<ar_size> > itr = tes_ar.s3_begin();
-	itr != tes_ar.s3_end(); ++itr)
+    	itr < tes_ar.s3_end(); ++itr)
+    	cout << *itr << " ";
+    cout << endl;
+    
+    cout << "test for stride_iterator<int, 7, test_array<ar_size> >." << endl;
+    for(stride_iterator<int, 7, test_array<ar_size> > itr = tes_ar.s7_begin();
+	itr < tes_ar.s7_end(); ++itr)
 	cout << *itr << " ";
     cout << endl;
 	
