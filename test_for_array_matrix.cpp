@@ -2,7 +2,7 @@
 #define UTIL_TEST_TOW_DIMENSION_MATRIX
 
 #include <iostream>
-#include "2d-matrix.hpp"
+#include "array_matrix.hpp"
 
 using namespace std;
 using namespace Utilpack;
