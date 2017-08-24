@@ -20,8 +20,8 @@ int main()
     cout << "fill with 1." << endl;
     test_matrix.fill(1);
     cout << "elem num = " << test_matrix.size() << endl;
-    cout << "row num = " << test_matrix.xsize() << endl;
-    cout << "column num = " << test_matrix.ysize() << endl;
+    cout << "row num = " << test_matrix.row_num() << endl;
+    cout << "column num = " << test_matrix.column_num() << endl;
 
     cout << "access and fill with rowcolumn num" << endl;
     for(size_t i = 0; i < row_Num; ++i){
