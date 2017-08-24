@@ -117,10 +117,10 @@ class array_matrix
     constexpr size_type max_size() const noexcept
     { return elem_Num; }
 
-    constexpr size_type xsize() const noexcept
+    constexpr size_type row_num() const noexcept
     { return row_Num; }
 
-    constexpr size_type ysize() const noexcept
+    constexpr size_type column_num() const noexcept
     { return column_Num; }
     
     constexpr bool empty() const noexcept
