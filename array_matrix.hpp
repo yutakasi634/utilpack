@@ -35,7 +35,7 @@ class array_matrix
     array_matrix() {};
     array_matrix(value_T value)
     {
-	fill_n(value);
+	fill(value);
     };
     
     void fill(const value_type& i)
