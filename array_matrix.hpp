@@ -33,7 +33,7 @@ class array_matrix
     constexpr static size_type elem_Num = row_Num * column_Num;
     
     array_matrix() {};
-    array_matrix(value_T value)
+    array_matrix(value_T&& value)
     {
 	fill_n(value);
     };
