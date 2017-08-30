@@ -6,6 +6,7 @@
 
 #include <array>
 #include <stdexcept>
+#include <iostream>
 #include "stride_iterator.hpp"
 
 namespace Utilpack
@@ -159,17 +160,32 @@ class array_matrix
 };
 
 //Array_matrix comparisons.
-template<typename value_T, std::size_t column_Num, std::size_t row_Num>
-inline bool operator==(const array_matrix<value_T, column_Num, row_Num>& one,
-		       const array_matrix<value_T, column_Num, row_Num>& two)
+template<typename value_T, std::size_t row_Num, std::size_t column_Num>
+inline bool operator==(const array_matrix<value_T, row_Num, column_Num>& one,
+		       const array_matrix<value_T, row_Num, column_Num>& two)
 { return std::equal(one.begin(), one.end(), two.begin()); }
 
-template<typename value_T, std::size_t column_Num, std::size_t row_Num>
-inline bool operator!=(const array_matrix<value_T, column_Num, row_Num>& one,
-		       const array_matrix<value_T, column_Num, row_Num>& two)
+template<typename value_T, std::size_t row_Num, std::size_t column_Num>
+inline bool operator!=(const array_matrix<value_T, row_Num, column_Num>& one,
+		       const array_matrix<value_T, row_Num, column_Num>& two)
 { return !(one == two); }
+
+template<typename value_T, std::size_t row_Num, std::size_t column_Num>
+std::ostream& operator<<(
+    std::ostream& os, const array_matrix<value_T, row_Num, column_Num>& self)
+{
+    for(std::size_t row = 0; row < row_Num; ++row){
+	auto row_itr = self.rowbegin(row);
+	while(row_itr != self.rowend(row) - 1){
+	    os << *row_itr << " ";
+	    ++row_itr;
+	}
+	os << *row_itr << std::endl;
+    }
+    return os;
+}
+
 
 } /* Utilpack */
 
 #endif /*UTIL_TOW_DIMENSION_MATRIX*/
-
