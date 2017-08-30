@@ -127,6 +127,13 @@ class array_matrix
     { return content.empty(); }
 
     //Element access.
+    reference at(size_type n) noexcept
+    {
+	if (n >= elem_Num)
+	    std::out_of_range("array_matrix index is bigger than total size.");
+	return content.at(n);
+    }
+    
     reference at(size_type n, size_type m) noexcept
     {
 	if (n >= row_Num)
