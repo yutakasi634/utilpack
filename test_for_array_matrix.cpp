@@ -48,12 +48,15 @@ int main()
 	cout << *itr << " ";
     cout << endl;
 
-    cout << "test columnbegin() and columnend() for const matrix." << endl;
+    cout << "test columnbegin() and columnend() for matrix." << endl;
     for(array_matrix<int, row_Num, column_Num>::column_iterator itr =
 	    test_matrix.columnbegin(2);
 	itr != (test_matrix.columnend(2)); ++itr)
 	cout << *itr << " ";
     cout << endl;
+
+    cout << "test << operator for const matrix." << endl;
+    cout << test_matrix;
     
     return 0;
 }
