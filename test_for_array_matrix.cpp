@@ -1,5 +1,5 @@
-#ifndef UTIL_TEST_TOW_DIMENSION_MATRIX
-#define UTIL_TEST_TOW_DIMENSION_MATRIX
+#ifndef UTIL_TEST_ARRAY_MATRIX
+#define UTIL_TEST_ARRAY_MATRIX
 
 #include <iostream>
 #include "array_matrix.hpp"
@@ -58,4 +58,4 @@ int main()
     return 0;
 }
 
-#endif /*UTIL-TEST-TOW-DIMENSION-MATRIX*/
+#endif /*UTIL_TEST_ARRAY_MATRIX*/
