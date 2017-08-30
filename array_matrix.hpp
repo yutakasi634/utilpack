@@ -131,27 +131,39 @@ class array_matrix
     //Element access.
     reference at(size_type n) noexcept
     {
+#ifdef DEBUG
 	if (n >= elem_Num)
 	    std::out_of_range("array_matrix index is bigger than total size.");
 	return content.at(n);
+#else
+	return content[n];
+#endif
     }
     
     reference at(size_type n, size_type m) noexcept
     {
+#ifdef DEBUG
 	if (n >= row_Num)
 	    std::out_of_range("array_matrix row index is bigger than row size.");
 	else if (m >= column_Num)
 	    std::out_of_range("array_matrix column index is bigger than column size.");
 	return content.at(n * column_Num + m);
+#else
+	return content[n * column_Num + m];
+#endif
     }
 
     constexpr const_reference at(size_type n, size_type m) const noexcept
     {
+#ifdef DEBUG
 	if (n >= row_Num)
 	    std::out_of_range("array_matrix row index is bigger than row size.");
 	else if (m >= column_Num)
 	    std::out_of_range("array_matrix column index is bigger than column size.");
 	return content.at(n * column_Num + m);
+#else
+	return content[n * column_Num + m];
+#endif
     }
     
   private:
