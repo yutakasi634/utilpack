@@ -20,15 +20,16 @@ class array_matrix
     using reference			= value_type&;
     using const_reference		= const value_type&;
     using size_type			= std::size_t;
-    using stride_iterator		= stride_iterator<value_type, column_Num, array_matrix>;
     using iterator			= typename array_type::iterator;
     using const_iterator		= typename array_type::const_iterator;
     using reverse_iterator		= typename array_type::reverse_iterator;
     using const_reverse_iterator	= typename array_type::const_reverse_iterator;
     using row_iterator			= iterator;
     using const_row_iterator		= const_iterator;
-    using column_iterator		= stride_iterator;
-    using const_column_iterator		= const stride_iterator;
+    using column_iterator		=
+	stride_iterator<value_type, column_Num, array_matrix>;
+    using const_column_iterator		=
+	stride_iterator<const value_type, column_Num, array_matrix>;
     
     constexpr static size_type elem_Num = row_Num * column_Num;
     
