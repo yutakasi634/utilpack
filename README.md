@@ -1,5 +1,7 @@
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+
 # utilpack
-使いまわせそうなプログラムの保存用レポジトリ。
+使いまわせそうなプログラムの保存用レポジトリ。C++14用。（clang,gccではC++11でも使用可能。）
 ## array_matrix.hpp
 ```cpp
 namespace Utilpack {
